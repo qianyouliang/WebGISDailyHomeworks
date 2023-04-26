@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    .hotMovies {
+        width: 700px;
+        height: 400px;
+        display: grid;
+        grid-template-columns:1fr 1fr 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        margin: 0 auto;
+        margin-top: 200px;
+    }
+    .movie{
+        text-align: center;
+        background-color: white;
+        position: relative;
+    }
+    a{
+        display: block;
+    }
+    .movie img {
+        display: block;
+        width: 115px;
+       
+    }
+    .message{
+        pointer-events: none;
+        width: 300px;
+        height: 250px;
+        border: 1px solid black;
+        border-radius: 10px;
+        background-color: rgba(238, 238, 238, 0.836);
+        filter: 0.5;
+        position: absolute;
+        text-align: center;
+        left: 90px;
+        top: 30px;
+        z-index: 100;
+        box-shadow: 5px 5px 10px rgb(27, 26, 25);
+    }
+</style>
+<body>
+    <div class="hotMovies">
+        
+    </div>
+    <script>
+        /* 
+            1. get方法获取豆瓣电影网的数据
+            2. 将数据渲染到页面上
+        
+        */
+        // 1. get方法获取豆瓣电影网的数据
+    window.addEventListener('load', function(){
+        var hotMovies = document.querySelector('.hotMovies')
+        var xhr = new XMLHttpRequest()
+        xhr.open('get', ' http://localhost:3000/data')
+        xhr.send()
+        xhr.onreadystatechange = function(){
+            if(xhr.readyState === 4 && xhr.status === 200){
+                var data = JSON.parse(xhr.responseText)
+                //创建movie元素
+                data.forEach(function(item){
+                    const movie = document.createElement('div')
+                    movie.className = 'movie';
+                    //为每个元素配置内容
+                    movie.innerHTML = `
+                        <a href=${item.info.url}><img src="${item.info.imgurl}" alt=""></a>
+                        <span style='color='red'>${item.title}</span>&nbsp;<span>${item.info.pingfen}</span>
+                    `
+                    hotMovies.appendChild(movie)
+                    var message = document.createElement('div')
+                    movie.addEventListener('mouseover', function(){
+                        console.log(123);
+                        message.className = 'message'
+                        message.innerHTML = `
+                            <p>${item.title}</p>
+                            <p>${item.info.pingfen}</p>
+                            <p>${item.info.yanyuan}</p>
+                            `
+                            movie.appendChild(message)
+                            })
+                    movie.addEventListener('mouseleave', function(){
+                            movie.removeChild(message)
+                        })
+                    
+                })
+            }
+        }
+    })
+
+
+    
+       
+
+
+    //用axios实现
+    // axios.get('http://localhost:3000/data').then(function(res){
+    //     res.forEach(function(item){
+    //         const movie = document.createElement('div')
+    //         movie.className = 'movie';
+    //         //为每个元素配置内容
+    //         movie.innerHTML = `
+    //             <a href=${item.info.url}><img src="${item.info.imgurl}" alt=""></a>
+    //             <span>${item.title}</span>&nbsp;<span>${item.info.pingfen}</span>
+    //         `
+    //         hotMovies.appendChild(movie)
+    //     })
+    // }
+
+    </script>
+</body>
+</html>

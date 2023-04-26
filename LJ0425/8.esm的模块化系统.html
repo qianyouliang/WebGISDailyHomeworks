@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- <script src="./8-1-1.js"></script>
+    <script src="./8-1-2.js"></script> -->
+    <!-- 上面的这种方式已经不能满足需求了，因为有命名冲突 -->
+    <script type="module">
+        // 如何在浏览器环境中进行模块化的引入，在ES6中定义了全新的模块化标准
+        import {a,x} from './8-1-1.js'
+        import {c,x as _x} from './8-1-2.js'
+        import aaa from './8-1-2.js' // 默认导出的模块，可以随便取名字,推荐还是用默认导出的模块的名字
+        //如果都想要导入，可以使用
+        import {c,x,f} from './8-1-2.js'
+        // 如果想要导入所有的，可以使用 * as
+        console.log(aaa);
+        console.log(x);
+        console.log(a);
+        console.log(c);
+        console.log(_x);
+
+        /* 一个模块导出方式只能选择一个 */
+
+        
+    </script>
+</body>
+</html>
