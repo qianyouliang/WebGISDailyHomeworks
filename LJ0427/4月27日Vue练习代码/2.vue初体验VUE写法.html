@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h2>{{num}}</h2><!-- 这里的num是一个变量，需要双花括号括起来 -->
+        <button @click="fn">点我自增</button><!-- @是vue为元素绑定事件的关键词 -->
+    </div>
+    
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    new Vue({
+        el:'#app',//el:element,即VUE需要管理的这个区域的选择器
+        data:{
+            num:0 //data中的数据，会被VUE所管理,即VUE会监视data中的数据的变化
+        },
+    methods:{
+        fn(){
+            this.num++
+        }}
+    })
+</script>
+</body>
+</html>

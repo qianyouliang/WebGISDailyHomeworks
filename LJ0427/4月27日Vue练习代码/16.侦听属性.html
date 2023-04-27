@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <button @click="count++">按钮</button>
+        <h1 v-show="show">动态显示的标题</h1>
+
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                count:0,
+                show:true
+            },
+            watch:{
+                count(newValue,oldValue){//监听count的变化,有两个参数，新值和旧值
+                    console.log('count发生了变化');
+                    if(this.count%2==0){//这里可用newValue和oldValue来判断,以newValue和oldValue为条件替代this.count
+                        this.show=true
+                    }else{
+                        this.show=false
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>

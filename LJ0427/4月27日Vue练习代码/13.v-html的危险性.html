@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-html可以将指令后的内容渲染到页面上和{{}}类似，还可以解析html标签 -->
+        <h1 v-html="count"></h1>
+        <h2 v-text="content"></h2>
+        <!-- v-html可以解析html标签，而v-text则和{{}}差不多，不能解析html标签 -->
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                /* 如果滥用v-html，可能会引起XSS攻击，即将一个标签字符串被输入到v-html中，
+                 永远不要在用户提交的位置放上v-html，因为用户可以输入任何标签，这样就会导致XSS攻击
+                */
+                count:'<em>0<em/>',
+                content:'<em>0<em/>'
+
+            },
+            mounted(){
+                setInterval(()=>{
+                    this.count++
+                },1000)
+            }
+        })
+    </script>
+</body>
+</html>

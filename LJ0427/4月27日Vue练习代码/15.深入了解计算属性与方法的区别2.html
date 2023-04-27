@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+
+        <h2>{{reverse}}</h2>
+        <h3>{{count}}</h3>
+        <button @click="count+=1">click!</button>
+
+        <!-- 
+            methods与computed的区别：
+                1.计算属性调用时不需要加小括号，
+                2.computed会缓存计算结果，如果多次使用，只会执行一次,来提高性能
+                3.如果计算属性依赖的数据没有变化，它不会重新计算，同样能提升性能
+         -->
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        var vm= new Vue({
+            el:'#app',
+            data:{
+                msg:'hello world',
+                count:0
+            },
+            // methods:{
+            //     reverse(){
+            //         console.log('方法被调用了');//每次调用都会执行
+            //         return this.msg.split('').reverse().join('')
+            //         //计算属性必须通过返回值的方式表达出来，尽量不要直接在模板中写复杂表达式
+            //     }
+            // },
+            computed:{
+                //如果计算属性依赖的数据没有变化，它不会重新计算，同样能提升性能
+                reverse(){
+                    console.log('方法被调用了');//只会执行一次
+                    return this.msg.split('').reverse().join('')
+                    //计算属性必须通过返回值的方式表达出来，尽量不要直接在模板中写复杂表达式
+                }
+            }
+        })
+        console.log(vm);
+    </script>
+</body>
+</html>

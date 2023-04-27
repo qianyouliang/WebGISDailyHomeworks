@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        
+        <button v-on:click="say('hi')"></button>
+        <button v-on:click="say('hello')"></button>
+    </div>
+    
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    const vm = new Vue({//这个new Vue()是VUE的实例化配置对象
+        el:'#app',//el:element,即VUE需要管理的这个视图区域的选择器
+        data:{//存储所有视图区域的数据
+            num:0 //data中的数据，会被VUE所管理,即VUE会监视data中的数据的变化
+        },
+    methods:{//存储所有视图区域的事件回调的对象
+        //如果希望显示地接收事件对象，比如在事件触发时手动地传入$event的参数
+        say(msg,e){ //让num自增
+            console.log(msg,e);
+        }
+
+    }
+    })
+
+    console.log(vm);
+</script>
+</body>
+</html>

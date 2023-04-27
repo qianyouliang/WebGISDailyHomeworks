@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <!-- <li v-for="(index,item) in friend">item是一个形参，可以任意替换，in是固定写法，可以用of替代，friend是vue对象的属性 -->
+                <!-- 序号：{{index}}姓名：{{item.name}}---年龄:{{item.age}}---性别：{{item.gender}} -->
+            <!-- </li> -->
+            <!-- 对象可以渲染，数字也可以渲染，字符串也可以渲染 ，但只有数组才是有实际意义的-->
+            <li v-for="(value,key,index) in persons"><!-- item是一个形参，可以任意替换，in是固定写法，可以用of替代，friend是vue对象的属性 -->
+                姓名：{{key}}---年龄:{{index}}---性别：{{value}}
+                <button @click="del(index)">点我删除</button>
+            </li>
+            <li></li>
+        </ul>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                // friend:[
+                // { name: '张三', age: 23, gender: '男' },
+                // { name: '李四', age: 28, gender: '男' },
+                // { name: '王五', age: 31, gender: '男' },
+                // { name: '赵六', age: 25, gender: '女' },
+                // { name: '周七', age: 29, gender: '男' },
+                // { name: '孙八', age: 27, gender: '女' },
+                // { name: '钱九', age: 30, gender: '男' },
+                // { name: '吴十', age: 24, gender: '女' },
+                // { name: '郑十一', age: 26, gender: '男' },
+                // { name: '陈十二', age: 33, gender: '女' },
+                // { name: '朱十三', age: 22, gender: '男' },
+                // { name: '卢十四', age: 31, gender: '男' },
+                // { name: '张十五', age: 27, gender: '女' },
+                // { name: '李十六', age: 29, gender: '女' },
+                // { name: '王十七', age: 30, gender: '男' },
+                // { name: '赵十八', age: 25, gender: '男' },
+                // { name: '周十九', age: 26, gender: '女' },
+                // { name: '孙二十', age: 32, gender: '男' },
+                // ],
+                persons:[
+                { name: '张三', age: 23, gender: '男' ,id:(Math.random()*100).toFixed(2)},
+                { name: '李四', age: 28, gender: '男' ,id:(Math.random()*100).toFixed(2)},
+                { name: '王五', age: 31, gender: '男' ,id:(Math.random()*100).toFixed(2)},
+                { name: '赵六', age: 25, gender: '女' ,id:(Math.random()*100).toFixed(2)},
+                { name: '周七', age: 29, gender: '男' ,id:(Math.random()*100).toFixed(2)},
+                { name: '孙八', age: 27, gender: '女' ,id:(Math.random()*100).toFixed(2)},
+                { name: '钱九', age: 30, gender: '男' ,id:(Math.random()*100).toFixed(2)},
+                { name: '吴十', age: 24, gender: '女' ,id:(Math.random()*100).toFixed(2)},
+                { name: '郑十一', age: 26, gender: '男' ,id:(Math.random()*100).toFixed(2)},
+                { name: '陈十二', age: 33, gender: '女' ,id:(Math.random()*100).toFixed(2)},
+                { name: '朱十三', age: 22, gender: '男' ,id:(Math.random()*100).toFixed(2)},
+                { name: '卢十四', age: 31, gender: '男' ,id:(Math.random()*100).toFixed(2)},
+                { name: '张十五', age: 27, gender: '女' ,id:(Math.random()*100).toFixed(2)},
+                { name: '李十六', age: 29, gender: '女' ,id:(Math.random()*100).toFixed(2)},
+                { name: '王十七', age: 30, gender: '男' ,id:(Math.random()*100).toFixed(2)},
+                { name: '赵十八', age: 25, gender: '男' ,id:(Math.random()*100).toFixed(2)},
+                { name: '周十九', age: 26, gender: '女' ,id:(Math.random()*100).toFixed(2)},
+                { name: '孙二十', age: 32, gender: '男' ,id:(Math.random()*100).toFixed(2)}
+            ],
+          
+           
+                
+            },
+            methods:{
+                del(index){
+                    this.persons.splice(index,1)
+                }
+            },
+        })
+    </script>
+</body>
+</html>

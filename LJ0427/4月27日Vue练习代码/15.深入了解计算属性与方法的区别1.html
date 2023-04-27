@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- 如果模板中能够直接使用一个变量，那么这个变量一定会被挂在到vm上 -->
+        <!-- data,methods,computed配置选项中的数据都会挂载到vue实例上 -->
+        <!-- <h2>{{reverse()}}</h2>
+        <h2>{{reverse()}}</h2>
+        <h2>{{reverse()}}</h2>
+        <h2>{{reverse()}}</h2> -->
+        <h2>{{reverse}}</h2>
+        <h2>{{reverse}}</h2>
+        <h2>{{reverse}}</h2>
+        <h2>{{reverse}}</h2>
+        <!-- 
+            methods与computed的区别：
+                1.计算属性调用时不需要加小括号，
+                2.computed会缓存计算结果，如果多次使用，只会执行一次,来提高性能
+         -->
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        var vm= new Vue({
+            el:'#app',
+            data:{
+                msg:'hello world'
+            },
+            // methods:{
+            //     reverse(){
+            //         console.log('方法被调用了');//每次调用都会执行
+            //         return this.msg.split('').reverse().join('')
+            //         //计算属性必须通过返回值的方式表达出来，尽量不要直接在模板中写复杂表达式
+            //     }
+            // },
+            computed:{
+                reverse(){
+                    console.log('方法被调用了');//只会执行一次
+                    return this.msg.split('').reverse().join('')
+                    //计算属性必须通过返回值的方式表达出来，尽量不要直接在模板中写复杂表达式
+                }
+            }
+        })
+        console.log(vm);
+    </script>
+</body>
+</html>

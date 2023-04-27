@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- v-html可以将指令后的内容渲染到页面上和{{}}类似，还可以解析html标签 -->
+        <h1 v-html="count"></h1>
+        <h2 v-text="content"></h2>
+        <!-- v-html可以解析html标签，而v-text则和{{}}差不多，不能解析html标签 -->
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                count:'<em>0<em/>',
+                content:'<em>0<em/>'
+
+            },
+            mounted(){
+                setInterval(()=>{
+                    this.count++
+                },1000)
+            }
+        })
+    </script>
+</body>
+</html>

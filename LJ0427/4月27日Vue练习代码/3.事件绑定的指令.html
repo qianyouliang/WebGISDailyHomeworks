@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <h2 v-on:mouseover="fn2">{{num}}</h2><!-- 这里的num是一个变量，需要双花括号括起来 -->
+        <button v-on:click="fn">点我自增</button><!-- @是vue为元素绑定事件的关键词 -->
+    </div>
+    
+    <!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+<script>
+    const vm = new Vue({//这个new Vue()是VUE的实例化配置对象
+        el:'#app',//el:element,即VUE需要管理的这个视图区域的选择器
+        data:{//存储所有视图区域的数据
+            num:0 //data中的数据，会被VUE所管理,即VUE会监视data中的数据的变化
+        },
+    methods:{//存储所有视图区域的事件回调的对象
+        //v-on:用来绑定事件的
+        //如果想要在methods中使用data中的数据，需要使用this关键字，this指向的是当前的VUE实例
+        fn(){ //让num自增
+            setTimeout(() => {
+                //箭头函数中的this指向的是当前的VUE实例,当前外层作用域的this指向的是vue
+                //这里就不能用function了，因为function中的this指向的是window
+                this.num++
+            }, 2000);
+        },
+        //v-on:可以简写为@
+        fn2(){
+            console.log('鼠标移入了');
+        },
+        fn3:function(){//上面的方法是这个的简写
+            console.log('鼠标移入了');
+        }
+        //methods里的函数不能用箭头函数，因为箭头函数中的this指向的是window
+    }
+    })
+    // el, data, methods, computed, watch等这些关键词都是固定的
+    console.log(vm);
+</script>
+</body>
+</html>
