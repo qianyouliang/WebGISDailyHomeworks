@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: rgb(71, 154, 223);
+        }
+
+        .card {
+            width: 50%;
+            height: auto;
+            background-color: white;
+            margin: 0 auto;
+            border-radius: 15px;
+            box-shadow: 5px 5px 10px black;
+            margin-bottom: 50px;
+        }
+
+        .input {
+            height: 120px;
+            line-height: 120px;
+        }
+
+        #app {
+            width: 100%;
+            margin-top: 250px;
+        }
+
+        input{
+            width: 80%;
+            height: 50px;
+            border: none;
+            border-bottom: 2px solid rgb(170, 162, 162);
+            outline: none;
+            margin-top: 20px;
+            margin-left: 20px;
+            font-size: 20px;
+            padding-left: 10px;
+        }
+
+        button {
+            background-color: rgb(71, 154, 223);
+            height: 60px;
+            width: 120px;
+            border-radius: 10px;
+            border: none;
+            color: white;
+            font-size: 1.3em;
+            cursor: "pointer";
+        }
+
+        .toDoList {
+            padding: 10px auto;
+
+        }
+
+        .toDoList .mission,.state {
+            margin: 10px auto;
+            width: 90%;
+
+            line-height: 90px;
+            font-size: 1.2em;
+            font-weight: 700;
+        }
+
+        .del {
+            height: 40px;
+            width: 80px;
+            line-height: 40px;
+            background-color: rgb(81, 147, 233);
+            text-align: center;
+            color: black;
+            font-size: 1em;
+            font-weight: 400;
+            border-radius: 10px;
+            cursor: "pointer";
+        }
+
+        .clearAll {
+            height: 50px;
+            width: 120px;
+            line-height: 50px;
+            background-color: rgb(60, 134, 231);
+            text-align: center;
+            color: black;
+            font-size: 1em;
+            font-weight: 400;
+            border-radius: 10px;
+            cursor: "pointer";
+        }
+
+        .mission {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .state {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .toDoList input{
+            width: 90%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="card input">
+            <input type="text" placeholder="请输入待办事项" v-model.trim="toDo">
+            <button @click="addTodo">添加</button>
+        </div>
+
+        <div class="toDoList card">
+            <div class="mission" v-for="toDo in toDoList">
+                <span v-if="!toDo.isEdited" @click="changeEdited(toDo.id)">{{toDo.message}}</span>
+                <button @click="del(toDo.id)" v-if="!toDo.isEdited" class="del">删除</button>
+                <input type="text" v-else v-model="toDo.message" @blur="changeEdited(toDo.id)">
+                
+            </div>
+            <div class="state"><span>{{state}}</span>
+                <span @click="clearAll" v-if="isShow" class="clearAll">全部清除</span>
+            </div>
+        </div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                toDo: '',
+                toDoList: [],
+                state: '暂无待办事项',
+                isShow: false,
+            },
+            methods: {
+                //实现添加toDo功能
+                addTodo: function () {
+                    if (this.toDo == '') {
+                        alert('输入不能为空！')
+                    } else {
+                        this.toDoList.push({
+                            message: this.toDo,
+                            id: Date.now(),
+                            isEdited: false//如果是false input框隐藏 显示span
+                        })
+                        this.toDo = ''
+                    }
+                },
+                //实现删除功能
+                del: function (id) {
+                    const index = this.toDoList.findIndex(toDo=>toDo.id===id)
+                    console.log(index);
+                    if (index !== -1) {
+                        console.log(index);
+                        this.toDoList.splice(index, 1)
+                    }
+
+                },
+                //实现全部清除功能
+                clearAll: function () {
+                    this.toDoList = []
+                },
+                changeEdited(id) {
+                    this.toDoList.forEach(toDo => {
+                        if (toDo.id === id) {
+                            toDo.isEdited = !toDo.isEdited
+                        }
+                    })
+                }
+
+            },
+            watch: {
+                //实现代办事项数量的实时更新
+                toDoList: function (newVal, oldVal) {
+                    if (newVal.length == 0) {
+                        this.state = '暂无待办事项'
+                        this.isShow = false
+                    } else {
+                        this.state = '当前代办数量为：' + newVal.length + '个'
+                        this.isShow = true
+                    }
+                },
+
+
+
+            }
+        })
+    </script>
+</body>
+
+</html>
