@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div @click="fn1">
+            <a href="#" @click.stop="fn">click me</a><!-- 点击一下，向上冒泡,加入事件修饰符.stop阻止冒泡 -->
+        </div>
+        <form action="123.php" @submit="fn2">
+            <button>gogogo</button>
+        </form>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+                
+            },
+            methods:{
+                fn(e){
+                    // e.stopPropagation();//阻止冒泡
+                    console.log("fn");
+                },
+                fn1(){
+                    console.log("fn1");
+                },
+                fn2(e){
+                    e.preventDefault();//阻止默认行为
+                    console.log("fn2");
+                }
+            }
+        })
+    </script>
+</body>
+</html>

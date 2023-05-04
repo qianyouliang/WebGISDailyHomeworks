@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>不使用 v-once</h2>
+        <p>{{message}}</p>
+        <button @click="changeMessage">更改消息</button>
+
+        <h2>使用 v-once</h2>
+        <p v-once>{{message}}</p>
+        <button @click="changeMessage">更改消息</button>
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello, Vue.js!'
+            },
+            methods: {
+                changeMessage: function () {
+                    this.message = 'Hello, v-once!';
+                }
+            }
+        });
+        /*
+            当一个元素及其子元素内包含大量静态内容，并且不需要随着数据变化而更新时，可以使用 v-once 优化性能。
+            当需要渲染一次性数据，比如从服务器获取的配置信息或用户信息等，可以使用 v-once 避免不必要的更新。
+        */
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h2 my-html="blue">{{person.name}}</h2>
+        <p>{{person.age}}</p>
+        <p>{{person.gender}}</p>
+        <p v-if="person.height">{{person.height}}</p>
+
+    </div>
+    <script>
+        //配置选项中的指令可以写成全局方法的格式
+        Vue.directive('my-html', {
+            bind(el, binding) {
+                el.style.color = 'blue';
+            }
+        });
+        new Vue({
+            el: '#app',
+            data: {
+                //希望给person对象添加一个新的属性身高
+                person: {
+                    name: '张三',
+                    age: 18,
+                    gender: '男',
+                    height: '' //方法1：在data中添加height属性，一开始就有数据绑定效果
+                }
+            },
+            methods: {
+                del() {
+                    // this.person.height = 180;这样添加的属性没有数据绑定效果，只能说是数据的添加
+                    //数据绑定视图的方法有二
+                    // this.$set(this.person,'height',180);
+                    //如果希望给data中的原始数据进行增加操作 必须要调用$set()这个全局方法 只有这样数据才具有响应性
+                    this.$delete(this.person, 'gender');//方法2：使用$set()方法添加属性，有数据绑定效果
+                    // $delete()方法是Vue的实例方法，所以要用this调用
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

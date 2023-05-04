@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <template>
+        <div>
+            <child-component>
+                <template v-slot:default="slotProps">
+                    <p>来自父组件的数据：{{ parentData }}</p>
+                    <p>来自子组件的数据：{{ slotProps.childData }}</p>
+                </template>
+            </child-component>
+        </div>
+    </template>
+
+    <script>
+        import ChildComponent from './ChildComponent.vue';
+
+        export default {
+            components: {
+                ChildComponent
+            },
+            data() {
+                return {
+                    parentData: 'Hello from Parent Component'
+                };
+            }
+        };
+    </script>
+
+</body>
+
+</html>

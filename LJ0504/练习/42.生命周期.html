@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <p :style="{
+        'fontSize':fs+'px'
+      }">{{ message }}</p>
+    </div>
+
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: "#app",
+            data: {
+                message: "Hello, Vue!",
+                fs: 100
+            },
+
+            beforeCreate() {
+                console.log("beforeCreate");
+            },
+            created() {
+                console.log("created");
+            },
+            beforeMount() {
+                console.log("beforeMount");
+            },
+             mounted() {
+                console.log("mounted");
+                const timer = setInterval(() => {
+                    if (this.fs > 20) {
+                            console.log(this.fs);
+                    this.fs--}
+                    else {
+                        clearInterval(timer)
+                    }
+                }, 100)
+
+
+            },
+            beforeUpdate() {
+                console.log("beforeUpdate");
+            },
+           
+            updated() {
+                console.log("updated");
+            },
+            beforeDestroy() {
+                console.log("beforeDestroy");
+            },
+            destroyed() {
+                console.log("destroyed");
+            }
+        });
+  /*
+                          这个组件中，我们定义了一个简单的模板，只有一个包含“Hello, Vue!”文本的段落元素。
+                          我们还定义了一个 message 数据属性，并在 created 钩子函数中将其初始化为“Hello, Vue!”。
+                          除了 data 属性之外，我们还定义了 beforeCreate、created、beforeMount、mounted、beforeUpdate、updated、beforeDestroy 和 destroyed 钩子函数，它们在不同的阶段执行。
+                        */
+    </script>
+</body>
+
+</html>

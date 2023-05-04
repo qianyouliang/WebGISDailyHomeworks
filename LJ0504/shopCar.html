@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 添加样式 -->
+    <style>
+        .button {
+            background-color: red;
+            pointer-events: none;
+        }
+
+        th {
+            width: 180px;
+            text-align: center;
+        }
+
+        td {
+            width: 180px;
+            text-align: center;
+        }
+        #sum{
+            font-size: 25px;
+            color: red;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 创建 Vue 应用的根元素 -->
+    <div id="app">
+        <h2>购物车</h2>
+        <div class="items">
+            <!-- 创建表格 -->
+            <table>
+                <!-- 表头 -->
+                <tr>
+                    <th>ID</th>
+                    <th>名称</th>
+                    <th>价格</th>
+                    <th>数量</th>
+                    <th>操作</th>
+                </tr>
+                <!-- 使用 v-for 指令循环遍历商品列表 -->
+                <tr v-for="good in goods">
+                    <td>{{good.id}}</td>
+                    <td>{{good.title}}</td>
+                    <td>{{good.price}}</td>
+                    <!-- 数量控制按钮 -->
+                    <td><button @click="good.number--"
+                            :class="{'button':good.number<=0? true:false}">-</button>{{good.number| addZero}}<button
+                            @click="good.number++">+</button></td>
+                    <!-- 删除按钮 -->
+                    <td><button @click="del(good.id)">删除</button></td>
+                </tr>
+            </table>
+        </div>
+        <!-- 显示商品总价 -->
+        <span style="font-size: 25px;">商品总价</span><span id="sum">{{sum}}</span>
+    </div>
+    <!-- 引入 Vue.js -->
+    <script src="vue.js"></script>
+    <!-- 引入 axios 库，用于 HTTP 请求 -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        // 创建 Vue 实例
+        const vm = new Vue({
+            el: '#app', // 指定根元素
+            data() {
+                return {
+                    goods: [], // 商品列表数据
+                }
+            },
+            methods: {
+                // 删除商品方法
+                del(id) {
+                    const index = this.goods.findIndex(item => item.id === id)
+                    this.goods.splice(index, 1)
+                }
+            },
+            filters: {
+                // 自定义过滤器，为数量小于10的商品添加前导零
+                addZero(number) {
+                    if (number < 10) {
+                        return number = '0' + number
+                    } else {
+                        return number
+                    }
+                }
+            },
+            computed: {
+                // 计算属性，计算商品总价
+                sum() {
+                    var sum = 0;
+                    this.goods.forEach(good => {
+                        sum += good.price * good.number
+                    });
+                    return sum.toFixed(2)
+                }
+            },
+            // 生命周期钩子：挂载完成
+            mounted() {
+                // 使用 axios 获取商品数据
+                axios.get('http://localhost:3000/data').then(res => {
+                    this.goods = res.data
+                    console.log(this.goods);
+                })
+            }
+        })
+
+    </script>
+</body>
+
+</html>

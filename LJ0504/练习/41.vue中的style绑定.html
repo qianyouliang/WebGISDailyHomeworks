@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<style>
+    .curColor {
+        color: red;
+    }
+
+    .bgc {
+        background-color: yellow;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <!-- 希望给h2添加一些动态样式 -->
+        <h2 :style="{fontSize:fs+'px'}">这里是h2标题</h2>
+        <button @click="fs++">点击增大字体大小</button>
+    </div>
+    <script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                fs: 20
+            },
+            methods: {
+                change() {
+                    this.curColor = !this.curColor;
+                },
+                toggle() {
+                    this.bgc = !this.bgc;
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<style>
+    .curColor {
+        color: red;
+    }
+
+    .bgc {
+        background-color: yellow;
+    }
+</style>
+
+<body>
+    <div id="app">
+        <!-- 希望给h1添加一些动态样式 -->
+        <h1 :class="[{
+            curColor
+        },{
+            bgc
+        }]">这是一个h1标题</h1><!-- 如果想要这个color动态变化，vue中一定要在data中定义 -->
+        <button @click="change">点我切换颜色</button>
+        <button @click="toggle">点我切换背景</button>
+    </div>
+    <script>
+
+        new Vue({
+            el: '#app',
+            data: {
+                //class绑定的第一种形式，对象写法，如果对象中某个属性值为true，则这个属性生效，如果为false，则这个属性不生效
+                //也可以将color去掉，直接调用属性
+                curColor: true,
+                //如果想要通过class绑定多个类名，写成数组形式
+                bgc: true
+            },
+            methods: {
+                change() {
+                    this.curColor = !this.curColor;
+                },
+                toggle() {
+                    this.bgc = !this.bgc;
+                }
+            }
+
+        });
+    </script>
+</body>
+
+</html>

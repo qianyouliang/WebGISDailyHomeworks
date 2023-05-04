@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <h2>使用过滤器将message转换为大写</h2><!-- 可以使用计算属性，更推荐使用过滤器 -->
+        <p>{{message|upper}}</p><!-- 这种语法 |过滤函数名 就是过滤器的使用语法；
+                                其中过滤函数要在vue对象实例中的filter属性中定义-->
+        
+        <h2>不使用过滤器</h2><!-- 可以使用计算属性，更推荐使用过滤器 -->
+        <p>{{message}}</p><!--  -->
+        
+        
+    </div>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello, Vue.js!'
+            },
+            filters: {
+                upper: function (value) {
+                    return value.toUpperCase();
+                }
+            }
+        });
+        
+    </script>
+</body>
+
+</html>

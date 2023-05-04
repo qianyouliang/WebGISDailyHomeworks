@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+      body {
+        background-color: #54a4f3;
+        /* background-color: rgb(241, 141, 158); */
+      }
+      .app {
+        width: 90%;
+        max-width: 34em;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+      }
+      #new-task {
+        position: relative;
+        background-color: #ffffff;
+        padding: 1.8em 1.25em;
+        border-radius: 0.3em;
+        box-shadow: 0 1.25em 1.8em rgba(1, 24, 48, 0.15);
+        display: grid;
+        grid-template-columns: 9fr 3fr;
+        gap: 1em;
+      }
+      input[type="checkbox"]{
+        margin-right: 10px;
+      }
+      .isChecked{
+        background-color: #0b87ff;
+        
+      }
+      #new-task input {
+        font-family: "Poppins", sans-serif;
+        font-size: 1em;
+        border: none;
+        border-bottom: 2px solid #d1d3d4;
+        padding: 0.8em 0.5em;
+        color: #111111;
+        font-weight: 500;
+      }
+      #new-task input:focus {
+        outline: none;
+        border-color: #0b87ff;
+      }
+      #new-task button {
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        font-size: 1em;
+        background-color: #0b87ff;
+        color: #ffffff;
+        outline: none;
+        border: none;
+        border-radius: 0.3em;
+        cursor: pointer;
+      }
+      #tasks {
+        background-color: #ffffff;
+        position: relative;
+        padding: 1.8em 1.25em;
+        margin-top: 3.8em;
+        width: 100%;
+        box-shadow: 0 1.25em 1.8em rgba(1, 24, 48, 0.15);
+        border-radius: 0.6em;
+      }
+      #tasks ul {
+        list-style: none;
+      }
+      #tasks ul li {
+        display: flex;
+        margin-bottom: 20px;
+        border-bottom: 1px solid #eee;
+      }
+      #tasks ul li span{
+        flex:1
+      }
+      #tasks button {
+        background-color: skyblue;
+        border-radius: 0.3em;
+        padding: 4px 12px;
+        border: none;
+        outline: none;
+        cursor: pointer;
+      }
+      .footer {
+        display: flex;
+        justify-content: space-between;
+      }
+      
+      .is-checked {
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="app">
+      <div id="new-task">
+        <input type="text" placeholder="请输入代办事项" v-model.trim="input"/>
+        <button @click="add">添加</button>
+      </div>
+      <div id="tasks">
+            <ul v-if="tasks.length">
+                <li v-for="task in tasks">
+                    <input type="checkbox" name="" :class="{'isChecked':task.isChecked}" @change="checked" v-model="task.isChecked">
+                    <span v-if="!task.isEdited" @click="changeEdited(task.id)" :class="{
+                        'is-checked':task.isChecked
+                    }">{{task.message}}</span>
+                    <button @click="del(task.id)" v-if="!task.isEdited">删除</button>
+                    <input type="text" v-else v-model="task.message" @blur="changeEdited(task.id)">
+                </li>
+            </ul>
+            <h2 v-else>没有代办事项</h2>
+            <div class="footer" v-if="tasks.length">
+                <span><input type="checkbox" :class="checkbox" v-model="allChecked">待办事项共有{{tasks.length}}项</span>
+                <button @click="clear">全部删除</button>
+            </div>
+      </div>
+    </div>
+    <script src="./vue.js"></script>
+    <script>
+      new Vue({
+        el: ".app",
+        data: {
+            input:'',//收集输入框的内容，
+            tasks:[],
+            isChecked:false//这个状态是用来
+        },
+        methods:{
+            add(){
+                if(!this.input){
+                    return alert('请输入有效内容')
+                }
+                //将input追加到tasks数组种
+                this.tasks.push({
+                    message:this.input,
+                    id:Date.now(),
+                    isEdited:false//如果是false input框隐藏 显示span
+                })
+                this.input = ''
+            },
+            clear(){
+                this.tasks = []
+            },
+            del(id){
+                //拿到了选中的那个li的index
+                const index = this.tasks.findIndex(task=>task.id===id)
+                this.tasks.splice(index,1)
+            },
+            changeEdited(id){
+                this.tasks.forEach(task=>{
+                    if(task.id === id){
+                        task.isEdited =!task.isEdited
+                    }
+                })
+            },
+            checked(id){
+              const task = this.tasks.find(task=>task.id===id);
+              task.isChecked = !this.isChecked
+            }
+        },
+        computed:{
+          // allChecked(){
+          //   //当所有task的isChecked都为true时，返回true
+          //   return this.tasks.every(task=>task.isChecked===true)
+          // }
+          allChecked:{
+            //当所有task的isChecked都为true时，返回true
+            get(){
+              return this.tasks.every(task=>task.isChecked===true)
+            },
+            //当修改计算属性的时候，如果修改后的值为true，那么所有的task的isChecked都为true；
+            //如果为false，那么所有的task的isChecked都为false
+            set(value){
+              if(value){
+                this.tasks.forEach(task=>task.isChecked = true)
+              }else{
+                this.tasks.forEach(task=>task.isChecked = false)
+              }
+              
+            }
+            
+          }
+        }
+
+        },
+      )
+    </script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="./vue.js"></script>
+    <style>
+        .highlight {
+            background-color: yellow;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <p v-highlight="highlighted">这是一个被高亮显示的段落。</p>
+    </div>
+    <!-- 
+
+        应用场景：
+            1.封装和复用一些常用的 DOM 操作，比如元素的显示和隐藏、样式的添加和移除等。
+            2.实现一些与数据绑定相关的功能，如在输入框中自动添加千分位分隔符。
+            3.在不修改第三方库源码的情况下，为其添加 Vue.js 的响应式功能。
+            4.自定义指令的主要优点是提高了代码的可维护性和可读性。
+                当我们在项目中遇到需要多次重复的 DOM 操作或特定逻辑时，可以考虑将其封装成一个自定义指令。
+                这样，我们只需要在元素上添加自定义指令，就可以实现相应的功能，而无需在组件的 methods 或 computed 中编写重复的代码。
+     -->
+    <script>
+        Vue.directive('highlight', {
+            bind: function (el, binding, vnode) { //钩子函数是一个对象，它包含了一系列的钩子函数和属；
+                //el这种孤独对应绑定指令的元素，binging中的value对应指令的绑定值，vnode对应指令所在的vnode
+                if (binding.value) {
+                    el.classList.add('highlight');
+                } else {
+                    el.classList.remove('highlight');
+                }
+            },
+            update: function (el, binding, vnode, oldVnode) {
+                if (binding.value !== binding.oldValue) {
+                    if (binding.value) {
+                        el.classList.add('highlight');
+                    } else {
+                        el.classList.remove('highlight');
+                    }
+                }
+            }
+        });
+
+        new Vue({
+            el: '#app',
+            data: {
+                highlighted: true
+            }
+        });
+    </script>
+    <!-- 
+        在这个示例中，我们创建了一个名为 v-highlight 的自定义指令，它的作用是为元素添加或移除名为 highlight 的 CSS 类。
+        我们在 bind 钩子函数中判断 binding.value 的值（即 highlighted 属性的值），
+        如果为 true，则为元素添加 highlight 类，反之则移除。
+        update 钩子函数用于监听数据变化，如果 binding.value 发生变化，我们根据新的值决定是否添加或移除 highlight 类。
+     -->
+</body>
+
+</html>

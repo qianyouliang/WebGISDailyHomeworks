@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="app">
+        <h2>不使用 v-pre</h2>
+        <p>{{message}}</p>
+
+        <h2>使用 v-pre</h2>
+        <p v-pre>{{message}}</p>
+    </div>
+    <!-- 
+        v-pre 是 Vue.js 2.x 中的一个指令，它的主要作用是告诉 Vue.js 编译器忽略这个元素及其子元素的编译过程。
+        这样，Vue.js 就不会解析其中的插值表达式和指令，而是直接将其原封不动地渲染到页面上。
+        v-pre 主要用于性能优化，尤其是在包含大量静态内容的元素中。
+      -->
+    <script src="./vue.js"></script>
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello, Vue.js!'
+            }
+        });
+    </script>
+    <!-- 
+        在这个示例中，我们创建了两个段落。第一个段落没有使用 v-pre，Vue.js 会正常编译和解析其中的插值表达式 {{message}}。
+        第二个段落使用了 v-pre，Vue.js 将不会解析其中的插值表达式，而是直接将原始文本 {{message}} 渲染到页面上。
+     -->
+</body>
+
+</html>

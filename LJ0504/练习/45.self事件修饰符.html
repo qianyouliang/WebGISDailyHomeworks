@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            padding:100px ;
+            background-color: blue;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="box" @click.self="fn1"><!-- 只会在当前位置展示，不会冒泡 -->
+            <div @click="fn">段落</div>
+            <h2>标题</h2>
+        </div>
+    </div>
+    <script src="vue.js"></script>
+    <script>
+        new Vue({
+            el:"#app",
+            data:{
+        
+            },
+           methods:{
+                fn(){
+                     // e.stopPropagation();//阻止冒泡
+                     console.log("fn");
+                },
+                fn1(){
+                     console.log("fn1");
+                },
+
+           }
+        })
+    </script>
+</body>
+</html>
