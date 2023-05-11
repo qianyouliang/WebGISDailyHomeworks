@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+    <ul>
+        <li>1</li>
+        <li>2</li>
+        <li>3</li>
+    </ul>
+<body>
+    <script>
+        //object.defineProperty() 用来定义对象的属性
+        //定义了一个普通对象，它身上的方法都是来自于它构造函数的原型对象
+        //Object.prototype身上的方法一般叫做实例方法，给object的实例使用的
+        //还有一类方法是直接被构造函数调用的 这类方法一般叫做静态方法
+        //静态方法 
+
+        //Array.isArray() 判断数据是否是数组 输出为布尔值
+        const obj = {
+            name: 'why',
+            age: 18
+        }
+        console.log(obj);
+        const arr = [10, 20, 30]
+        console.log(Array.isArray(arr));
+        //Array.from() 一般可以将伪数组转换为数组，常见的伪数组有arguments和HTMLCollection
+        //arguments是函数的实参列表
+        function fn(){
+            console.log(arguments);//arguments是函数内部的实参列表，和this很类似
+            console.log(Array.isArray(arguments));//false
+            //arguments是一个伪数组，它的结构和数组很像，但是它不是数组
+            arguments = Array.from(arguments)
+            console.log(arguments);//只有转成真数组才能使用数组的全部方法
+            console.log(Array.isArray(arguments));//true
+        }
+        fn(1,2,3,4,5)//如果一个对象的属性名是数字，那么这个属性不会被当做对象的属性来看待，而是当做数组的索引来看待
+        
+
+/*         const lis = document.querySelectorAll('li')
+        console.log(lis);//用索引值作为键名
+        console.log(Array.isArray(lis));//false */
+
+
+    </script>
+</body>
+
+</html>

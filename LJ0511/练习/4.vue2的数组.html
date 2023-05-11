@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="item iin list">{{item}}</li>
+        </ul>
+    </div>
+    <script>
+        const app = new Vue({
+            el: '#app',
+            data: {
+                name: 'why',
+                age: 18,
+                info: {
+                    address: '洛杉矶'
+                },
+                list:[1,2,3]
+            }
+        })
+        //我要将数组的第一个数组元素修改为4
+        vm.list[0] = 4 //不会通知视图更新
+        //在vue中要通过数组方法来修改数组中的元素
+        vm.list.splice(0,1,4)//通知视图更新
+        console.log(vm);//为什么数组方法就能感受到vue中的数据变化呢？
+        //因为vue中对数组的方法进行了重写，重写的方法中有通知视图更新的功能，这里的splice和数组原来的splice不一样
+    </script>
+</body>
+</html>

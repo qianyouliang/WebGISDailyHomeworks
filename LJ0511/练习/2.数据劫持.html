@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // var person = {
+        //     name: 'why',
+        //     age: 18
+        // }
+        // //访问对象的属性
+        // console.log(person.name);
+
+        // //我觉得这个age这个属性很敏感，我不希望别人访问到，只能访问姓名，不能访问年龄
+        // /* console.log(person.age); *///这样我们就应该在访问age属性的时候做一些限制或审核
+        // Object.defineProperty(person,'name',{
+        //     get(){
+        //         return person.name //通过get得到返回值
+        //     },
+        //     set(value){
+        //         return value //通过set修改值
+        //     }
+        // })//
+        // Object.defineProperty(person,'age',{
+        // get(){
+        //     return '**'
+        // }}//这样就可以限制访问age属性的时候，返回的是**，而不是18
+        // )
+        // console.log(person.age);
+        let data = {
+            name: 'why',
+            age: 18
+        }
+        //现在我们将data当作vue中的数据源，为了响应式，我们需要将data中的数据观测起来
+        data.age = 20 //data本身是没有变化的，它是一个引用地址，它指向的对象发生了变化，但它不变
+        //原始值 如果值变了 那么我们可以认为其数据变了 引用值其中一个属性变了 我们无法视为其值变了
+        let a = [1,2,3]
+        a[1] = 4//[1,4,3] a本身没有变化，它指向的数组发生了变化
+        a = [1,4,3] //a本身发生了变化，它指向的数组发生了变化，所以data也是一样的
+
+        //如果我们想要改变data的值，那么我们需要遍历data中的每一个属性，如果其中的属性值变化，那么我我们就可以认为这个data变化(视图更新)
+        //但是这样做的话，我们需要遍历data中的每一个属性，这样做很麻烦，所以我们需要一个更好的方法来实现这个功能
+        //第一步，收集一下所有的key walk方法遍历data读对象
+        function walk(data){
+            Object.keys(data).forEach(key =>{
+                //第二步 给每个data中的key值添加一个响应式方法
+                defineReactive(data,key,data[key])
+            })
+        }
+
+        function defineReactive(data,key,value){
+            Object.defineProperty(data,key,{
+                get(){
+                    return value
+                },
+                set(newValue){
+                    if(newValue === value){
+                        return
+                    }
+                    value = newValue//改动数据
+                    //通知试图更新
+                    console.log('视图要更新了');
+                }
+            })
+        }
+        walk(data)//['name', 'age']
+        data.name = '李四'//视图要更新了
+        data.age = 20 //数据劫持的数据在控制台中展示为(...)
+    </script>
+</body>
+</html>
