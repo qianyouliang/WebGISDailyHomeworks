@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,
+        body,
+        #container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .content-window-card {
+            position: relative;
+            box-shadow: none;
+            bottom: 0;
+            left: 0;
+            width: auto;
+            padding: 0;
+        }
+
+        .content-window-card p {
+            height: 2rem;
+        }
+
+        .custom-info {
+            border: solid 1px silver;
+        }
+
+        div.info-top {
+            position: relative;
+            background: none repeat scroll 0 0 #F9F9F9;
+            border-bottom: 1px solid #CCC;
+            border-radius: 5px 5px 0 0;
+        }
+
+        div.info-top div {
+            display: inline-block;
+            color: #333333;
+            font-size: 14px;
+            font-weight: bold;
+            line-height: 31px;
+            padding: 0 10px;
+        }
+
+        div.info-top img {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transition-duration: 0.25s;
+        }
+
+        div.info-top img:hover {
+            box-shadow: 0px 0px 5px #000;
+        }
+
+        div.info-middle {
+            font-size: 12px;
+            padding: 10px 6px;
+            line-height: 20px;
+        }
+
+        div.info-bottom {
+            height: 0px;
+            width: 100%;
+            clear: both;
+            text-align: center;
+        }
+
+        div.info-bottom img {
+            position: relative;
+            z-index: 104;
+        }
+
+        span {
+            margin-left: 5px;
+            font-size: 11px;
+        }
+
+        .info-middle img {
+            float: left;
+            margin-right: 6px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container"></div>
+    <script type="text/javascript">
+        window._AMapSecurityConfig = {
+            securityJsCode: "32d0bfc78692b0ae776fe0b110d96ad3",
+        }
+    </script>
+    <script type="text/javascript">
+    </script>
+    <script src="https://webapi.amap.com/loader.js"></script>
+    <script type="text/javascript">
+        AMapLoader.load({
+            key: "0f2c28eab64f182443c08f032b955cd3",       // 申请好的Web端开发者Key，首次调用 load 时必填
+            version: "2.0",                 // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
+        }).then((AMap) => {
+            var map = new AMap.Map('container', {
+                zoom: 11,//级别
+                center: [116.397428, 39.90923],//中心点坐标
+                viewMode: '3D'//使用3D视图
+            });
+            //实时路况图层
+            var trafficLayer = new AMap.TileLayer.Traffic({
+                zIndex: 10
+            });
+            var marker = new AMap.Marker({
+                position: [116.39, 39.9]//位置
+            })
+            map.add(marker);//添加到地图
+            // map.remove(marker) //移除方法
+
+            //绘制线要素
+            var lineArr = [
+                [116.368904, 39.913423],
+                [116.382122, 39.901176],
+                [116.387271, 39.912501],
+                [116.398258, 39.904600]
+            ];
+            var polyline = new AMap.Polyline({
+                path: lineArr,          //设置线覆盖物路径
+                strokeColor: "#3366FF", //线颜色
+                strokeWeight: 5,        //线宽
+                strokeStyle: "solid",   //线样式
+            });
+            map.add(polyline);
+
+            //多边形
+            var path = [
+                new AMap.LngLat(116.368904, 39.913423),
+                new AMap.LngLat(116.382122, 39.901176),
+                new AMap.LngLat(116.387271, 39.912501),
+                new AMap.LngLat(116.398258, 39.904600)
+            ];
+
+            var polygon = new AMap.Polygon({
+                path: path,
+                fillColor: '#fff', // 多边形填充颜色
+                borderWeight: 2, // 线条宽度，默认为 1
+                strokeColor: 'red', // 线条颜色
+            });
+
+            map.add(polygon);
+
+
+            var circle = new AMap.Circle({
+                center: new AMap.LngLat(116.39, 39.9),  // 圆心位置
+                radius: 1000, // 圆半径
+                fillColor: 'red',   // 圆形填充颜色
+                strokeColor: '#fff', // 描边颜色
+                strokeWeight: 2, // 描边宽度
+            });
+
+            map.add(circle);
+
+            //贝赛尔曲线经过的起点，途经点，控制点，终点的二维数组
+            var startPoint = [[116.39, 39.9]]; // 起点
+            var viaPoint1 = [[116.39, 39.9], [106.39, 38.9]]; // 控制点，途经点
+            var viaPoint2 = [[116.39, 39.9], [106.39, 38.9], [106.39, 38.9]]; // 控制点，控制点，途经点
+            var endPoint = [[116.39, 39.9], [106.39, 38.9]]; // 控制点，终点
+
+            var path = [
+                startPoint,
+                viaPoint1,
+                viaPoint2,
+                endPoint
+            ];
+
+
+            var bezierCurve = new AMap.BezierCurve({
+                path: path,
+                strokeWeight: 10, // 线条宽度
+                strokeColor: '#fff', // 线条颜色
+                isOutline: true,	// 是否描边
+                outlineColor: 'green', // 描边颜色
+                borderWeight: 5 // 描边宽度
+            });
+
+            map.add(bezierCurve);
+
+        }).catch((e) => {
+            console.error(e);  //加载错误提示
+        });
+
+
+    </script>
+</body>
+
+</html>
