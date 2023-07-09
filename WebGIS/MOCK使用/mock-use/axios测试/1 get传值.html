@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        //获取所有数据
+        const resAll = axios.get('http://localhost:8000/user');
+        console.log(resAll);
+        //根据参数进行查询
+        const resUser = axios.get('http://localhost:8000/user?username=杜杰')
+        console.log(resUser);
+    </script>
+</body>
+</html>
